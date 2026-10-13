@@ -1,0 +1,23 @@
+// Netlify Function : webhook Stripe. Arrête automatiquement les paiements en 10 fois après la 10e échéance.
+// Dans Stripe > Développeurs > Webhooks, ajoutez l'URL https://haiko-academy.com/.netlify/functions/stripe-webhook
+// avec l'événement « checkout.session.completed », puis copiez la clé de signature dans STRIPE_WEBHOOK_SECRET.
+const crypto = require('crypto');
+const { store, compter } = require('./_places.js');
+exports.handler = async (event) => {
+  const secret = process.env.STRIPE_WEBHOOK_SECRET, key = process.env.STRIPE_SECRET_KEY;
+  const sig = event.headers['stripe-signature'] || '';
+  const raw = event.isBase64Encoded ? Buffer.from(event.body, 'base64').toString('utf8') : event.body;
+  const parts = Object.fromEntries(sig.split(',').map(s => s.split('=')));
+  const expected = crypto.createHmac('sha256', secret || '').update(parts.t + '.' + raw).digest('hex');
+  if (!secret || !parts.v1 || !crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(parts.v1.padEnd(expected.length).slice(0, expected.length)))) return { statusCode: 400, body: 'Signature invalide' };
+  const evt = JSON.parse(raw);
+  if (evt.type === 'checkout.session.completed') {
+    const o = evt.data.object, cles = ((o.metadata && o.metadata.cles) || '').split(',').filter(Boolean);
+    if (cles.length) await compter(store(event), cles, 'stripe:' + o.id);
+  }
+  if (evt.type === 'checkout.session.completed' && evt.data.object.mode === 'subscription' && evt.data.object.subscription) {
+    const d = new Date(); d.setMonth(d.getMonth() + 9); d.setDate(d.getDate() + 15);
+    await fetch('https://api.stripe.com/v1/subscriptions/' + evt.data.object.subscription, { method: 'POST', headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'cancel_at=' + Math.floor(d.getTime() / 1000) + '&proration_behavior=none' });
+  }
+  return { statusCode: 200, body: 'ok' };
+};
