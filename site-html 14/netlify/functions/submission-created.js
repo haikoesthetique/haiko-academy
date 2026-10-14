@@ -36,7 +36,7 @@ function mail(prenom, sujet, d, brochure) {
   return '<!doctype html><html><body style="margin:0;background:#fffcf1;font-family:Poppins,Arial,sans-serif;color:#000aff">'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fffcf1"><tr><td align="center" style="padding:32px 16px">'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-radius:28px">'
-    + '<tr><td style="background:#000aff;border-radius:28px 28px 0 0;padding:28px 32px"><p style="margin:0;font-size:26px;color:#fffcf1;font-weight:bold">haiko academy</p><p style="margin:4px 0 0;font-size:12px;color:#cdf564;letter-spacing:2px">ÉCOLE SUPÉRIEURE D\'ESTHÉTIQUE</p></td></tr>'
+    + '<tr><td style="background:#000aff;border-radius:28px 28px 0 0;padding:28px 32px"><a href="https://haiko-academy.com" style="text-decoration:none"><img src="https://haiko-academy.com/images/logo-haiko-academy-lime.png" alt="Haïko Academy – École Supérieure d\'Esthétique" width="200" style="display:block;width:200px;max-width:100%;height:auto;border:0"></a></td></tr>'
     + '<tr><td style="padding:32px">'
     + '<p style="margin:0;font-size:24px;font-weight:bold;line-height:1.2">Merci ' + esc(prenom || '') + ', votre demande est bien reçue.</p>'
     + (brochure ? '<p style="margin:16px 0 0;font-size:16px;line-height:1.6">Merci pour votre intérêt pour ' + esc(sujet) + '. Vous trouverez ci-dessous notre brochure 2027 : formules, programme, calendrier et tarifs. Notre équipe revient vers vous sous 48 h maximum.</p>' : '<p style="margin:16px 0 0;font-size:16px;line-height:1.6">Nous avons bien reçu votre message concernant ' + esc(sujet) + '. Notre équipe revient vers vous sous 48 h maximum.</p>')
