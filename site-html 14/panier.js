@@ -39,13 +39,17 @@
     var list = q('[data-panier-liste]'); if (!list) return;
     var total = 0, allCap = items.length > 0;
     list.innerHTML = items.length ? items.map(function (i, n) {
-      var p = find(i.id); total += p.prix; if (p.groupe !== 'cap') allCap = false;
+      var p = find(i.id); total += p.prix; 
       return '<li style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:14px 0;border-top:1px solid rgba(0,10,255,0.25)">' +
         '<span style="font-weight:600;font-size:15px;line-height:1.35">' + esc(p.nom) + '</span><span style="font-weight:700;font-size:15px;white-space:nowrap">' + eur(p.prix) + '</span>' +
         '<span style="font-size:13px;line-height:1.45">' + esc(label(i)) + (i.session && complet(i.id, i.session) ? ' — complet, à retirer' : '') + '</span>' +
         '<button type="button" data-retirer="' + n + '" style="justify-self:end;min-height:44px;padding:0 4px;border:0;background:none;color:#000aff;font:inherit;font-size:13px;text-decoration:underline;cursor:pointer">Retirer</button></li>';
     }).join('') : '<li style="padding:14px 0;border-top:1px solid rgba(0,10,255,0.25);font-size:15px">Votre panier est vide.</li>';
     var t = q('[data-panier-total]'); if (t) t.textContent = eur(total);
+    var needE = items.some(function (i) { return i.id === 'cap-elearning' || i.id === 'cap-combo'; });
+    var lim = Date.now() + 15 * 864e5;
+    var needD = items.some(function (i) { var m = String(i.session || '').match(/(\d{4})-(\d{2})-(\d{2})/); return m && new Date(+m[1], +m[2] - 1, +m[3]).getTime() < lim; });
+    [['elearning', needE], ['debut', needD]].forEach(function (x) { var l = q('[data-cb="' + x[0] + '"]'); if (!l) return; l.hidden = !x[1]; var inp = l.querySelector('input'); inp.required = x[1]; if (!x[1]) inp.checked = false; });
     var p10 = q('[data-plan-info="stripe-10"]'); if (p10) p10.textContent = allCap ? '10 × ' + eur(Math.round(total * 10) / 100) + ' par mois' : 'Réservé aux formules CAP';
     var b10 = q('[data-pay="stripe-10"]'); if (b10) b10.disabled = !allCap;
     var almaOk = !!cat().almaActif && total > 0 && total <= (cat().almaMax || 2000);
@@ -60,7 +64,7 @@
     if (!items.length) return;
     if (f && !f.reportValidity()) return;
     var d = new FormData(f);
-    var client = { prenom: d.get('prenom'), nom: d.get('nom'), email: d.get('email'), telephone: d.get('telephone'), cgv: d.get('cgv') === 'on' };
+    var client = { prenom: d.get('prenom'), nom: d.get('nom'), email: d.get('email'), telephone: d.get('telephone'), cgv: d.get('cgv') === 'on', renonciationElearning: d.get('renonciation_elearning') === 'on', debutAnticipe: d.get('debut_anticipe') === 'on' };
     var btns = document.querySelectorAll('[data-pay]'); btns.forEach(function (b) { b.dataset.wasDisabled = b.disabled; b.disabled = true; });
     try {
       var r = await fetch('/.netlify/functions/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plan: plan, items: items, client: client }) });

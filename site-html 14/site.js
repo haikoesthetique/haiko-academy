@@ -82,4 +82,6 @@
     });
     var c=read();if(c)apply(c);else show(false);
   })();
+(function(){var m=new URLSearchParams(location.search).get('motif');if(!m)return;var r=document.querySelector('input[name="motif"][value="'+m+'"]');if(r)r.checked=true;})();
+(function(){var r=document.querySelector('[data-sim-input]');if(!r)return;var q=function(s){return document.querySelector(s);};function up(){var h=+r.value,w=h===2?104:Math.ceil(200/h),m=h===2?24:Math.min(24,Math.max(3,Math.round(200/h/4.33)));q('[data-sim-h]').textContent=h+' h';q('[data-sim-h2]').textContent=h;q('[data-sim-mois]').textContent=m;q('[data-sim-semaines]').textContent=w;q('[data-sim-rythme]').textContent=h<=4?'Un rythme doux, compatible avec un emploi à temps plein.':h<=9?'Un rythme régulier, idéal pour une reconversion en parallèle de votre activité.':'Un rythme soutenu, pour passer l\'examen rapidement.';r.setAttribute('aria-valuetext',h+' heures par semaine, environ '+m+' mois');}r.addEventListener('input',up);up();})();
 })();

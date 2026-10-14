@@ -40,12 +40,11 @@ exports.handler = async (event) => {
   const cles = lignes.filter(l => l.cle && l.p.places).map(l => l.cle).join(',');
   const total = lignes.reduce((s, l) => s + l.p.prix * 100, 0);
   const resume = lignes.map(l => l.p.nom + ' — ' + l.session).join(' | ').slice(0, 480);
-  const meta = { cles: cles.slice(0, 490), formations: resume, prenom: client.prenom, nom: client.nom, telephone: client.telephone };
+  const meta = { cles: cles.slice(0, 490), formations: resume, prenom: client.prenom, nom: client.nom, telephone: client.telephone, consentements: [client.renonciationElearning ? 'renonciation retractation e-learning' : '', client.debutAnticipe ? 'debut avant fin du delai' : ''].filter(Boolean).join(', ') || 'aucun' };
 
   if (plan === 'stripe-1' || plan === 'stripe-10') {
     const key = process.env.STRIPE_SECRET_KEY; if (!key) return json(500, { error: 'Paiement Stripe non configuré' });
     const dix = plan === 'stripe-10';
-    if (dix && lignes.some(l => l.p.groupe !== 'cap')) return json(400, { error: 'Le paiement en 10 fois est réservé aux formules CAP' });
     const body = { mode: dix ? 'subscription' : 'payment', customer_email: client.email, locale: 'fr',
       success_url: base + '/paiement-confirme?session_id={CHECKOUT_SESSION_ID}', cancel_url: base + '/inscription?annule=1', metadata: meta, line_items: {} };
     lignes.forEach((l, i) => {

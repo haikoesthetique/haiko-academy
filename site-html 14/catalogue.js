@@ -69,7 +69,7 @@
       "id": "cap-combo",
       "groupe": "cap",
       "nom": "CAP esthétique – Formule Combo Théorie + Pratique",
-      "detail": "200 h de théorie + 65 h de pratique",
+      "detail": "200 h de théorie + 65 h de pratique à Marseille",
       "prix": 2990,
       "prixBarre": 3580,
       "sessions": [
@@ -198,9 +198,79 @@
         }
       ],
       "places": 6
+    },
+    {
+      "id": "pack-expert-minceur",
+      "groupe": "pack",
+      "nom": "Pack Expert Minceur",
+      "detail": "Drainage lymphatique brésilien + Madérothérapie · -20 %",
+      "prix": 1264,
+      "prixBarre": 1580,
+      "sessions": [
+        {
+          "id": "2027-03-21_2027-04-04",
+          "label": "Drainage : dimanche 21 mars 2027 · Madérothérapie : dimanche 4 avril 2027"
+        },
+        {
+          "id": "2027-03-21_2027-11-14",
+          "label": "Drainage : dimanche 21 mars 2027 · Madérothérapie : dimanche 14 novembre 2027"
+        },
+        {
+          "id": "2027-10-17_2027-04-04",
+          "label": "Drainage : dimanche 17 octobre 2027 · Madérothérapie : dimanche 4 avril 2027"
+        },
+        {
+          "id": "2027-10-17_2027-11-14",
+          "label": "Drainage : dimanche 17 octobre 2027 · Madérothérapie : dimanche 14 novembre 2027"
+        }
+      ]
+    },
+    {
+      "id": "pack-facialiste-1",
+      "groupe": "pack",
+      "nom": "Pack Facialiste – Niveau 1",
+      "detail": "Hydraface + Kobido · -20 % · bonus : apprentissage du protocole signature Haïko « Korean Glass Skin »",
+      "prix": 1584,
+      "prixBarre": 1980,
+      "sessions": [
+        {
+          "id": "2027-05-23_2027-05-08",
+          "label": "Hydraface : dimanche 23 mai 2027 · Kobido : samedi 8 et dimanche 9 mai 2027"
+        },
+        {
+          "id": "2027-05-23_2027-11-27",
+          "label": "Hydraface : dimanche 23 mai 2027 · Kobido : samedi 27 et dimanche 28 novembre 2027"
+        },
+        {
+          "id": "2027-12-05_2027-05-08",
+          "label": "Hydraface : dimanche 5 décembre 2027 · Kobido : samedi 8 et dimanche 9 mai 2027"
+        },
+        {
+          "id": "2027-12-05_2027-11-27",
+          "label": "Hydraface : dimanche 5 décembre 2027 · Kobido : samedi 27 et dimanche 28 novembre 2027"
+        }
+      ]
+    },
+    {
+      "id": "pack-facialiste-2",
+      "groupe": "pack",
+      "nom": "Pack Facialiste – Niveau 2",
+      "detail": "Nanoneedling + Peeling esthétique · -20 %",
+      "prix": 1264,
+      "prixBarre": 1580,
+      "sessions": [
+        {
+          "id": "2027-06-06_2027-06-20",
+          "label": "Nanoneedling : dimanche 6 juin 2027 · Peeling : dimanche 20 juin 2027"
+        },
+        {
+          "id": "2027-12-12_2027-06-20",
+          "label": "Nanoneedling : dimanche 12 décembre 2027 · Peeling : dimanche 20 juin 2027"
+        }
+      ]
     }
   ],
   "almaMax": 2000,
-  "noteSessions": "Calendrier prévisionnel sous réserve de confirmation des intervenants.",
-  "almaActif": false
+  "noteSessions": "",
+  "almaActif": true
 });
