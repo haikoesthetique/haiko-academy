@@ -69,7 +69,12 @@ exports.handler = async (event) => {
       customer: { first_name: client.prenom, last_name: client.nom, email: client.email, phone: client.telephone } };
     const r = await fetch(api + '/v1/payments', { method: 'POST', headers: { Authorization: 'Alma-Auth ' + key, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const out = await r.json().catch(() => ({}));
-    if (!r.ok || !out.url) return json(502, { error: out.message || out.error || 'Paiement Alma indisponible pour ce montant' });
+    if (!r.ok || !out.url) {
+      console.log('Alma erreur', r.status, api, JSON.stringify(out));
+      const det = out.message || out.error || (out.errors && JSON.stringify(out.errors)) || '';
+      const why = r.status === 401 || r.status === 403 ? 'clé Alma refusée : vérifiez ALMA_API_KEY et ALMA_MODE (live ou test)' : det || 'paiement Alma indisponible pour ce montant';
+      return json(502, { error: why + ' [Alma ' + r.status + ']' });
+    }
     return json(200, { url: out.url });
   }
   return json(400, { error: 'Mode de paiement inconnu' });
