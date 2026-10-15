@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /brochure-cap-esthetique-2027.pdf
 
 Sitemap: https://haiko-academy.com/sitemap.xml

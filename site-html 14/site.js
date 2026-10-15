@@ -45,15 +45,17 @@
   var ok="Votre demande a bien été reçue. Nous revenons vers vous sous 48 h maximum.";
   var M={cap:['PROGRAMME CAP',ok],drainage:['DRAINAGE LYMPHATIQUE BRÉSILIEN',ok],kobido:['FORMATION KOBIDO',ok],maderotherapie:['FORMATION MADÉROTHÉRAPIE',ok],hydraface:['FORMATION HYDRAFACE',ok],nanoneedling:['FORMATION NANONEEDLING',ok],peeling:['FORMATION PEELING ESTHÉTIQUE',ok],rappel:['DEMANDE DE RAPPEL',"Merci, nous vous rappelons très vite."],contact:['CONTACT',"Votre message a bien été transmis. Nous revenons vers vous sous 48 h maximum."]};
   if(d&&M[d]){var e1=document.querySelector('[data-merci="eyebrow"]'),e2=document.querySelector('[data-merci="message"]');if(e1)e1.textContent=M[d][0];if(e2)e2.textContent=M[d][1];}
+  var eb=document.querySelector('[data-merci="brochure"]');if(eb&&d&&d!=='cap'&&d!=='rappel')eb.remove();
   // Bandeau cookies : GA et Meta chargés uniquement après consentement
   (function(){
-    var GA_ID='', META_ID=''; // A RENSEIGNER : GA_ID='G-XXXXXXX' ; META_ID='identifiant Pixel Meta'
+    var GA_ID='', META_ID='', ADS_ID='AW-366799775'; // A RENSEIGNER : GA_ID='G-XXXXXXX' ; META_ID='identifiant Pixel Meta'
     var KEY='haiko-cookies', SIX=1000*60*60*24*182, loaded={};
     function read(){try{var c=JSON.parse(localStorage.getItem(KEY)||'null');if(c&&Date.now()-c.t<SIX)return c;}catch(e){}return null;}
     function load(src){var s=document.createElement('script');s.async=true;s.src=src;document.head.appendChild(s);}
     function apply(c){
-      if(c.a&&GA_ID&&!loaded.ga){loaded.ga=1;window.dataLayer=window.dataLayer||[];window.gtag=function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config',GA_ID,{anonymize_ip:true});load('https://www.googletagmanager.com/gtag/js?id='+GA_ID);}
+      if(c.a&&GA_ID&&!loaded.ga){loaded.ga=1;window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config',GA_ID,{anonymize_ip:true});load('https://www.googletagmanager.com/gtag/js?id='+GA_ID);}
       if(c.m&&META_ID&&!loaded.meta){loaded.meta=1;var n=window.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments);};if(!window._fbq)window._fbq=n;n.push=n;n.loaded=true;n.version='2.0';n.queue=[];load('https://connect.facebook.net/fr_FR/fbevents.js');window.fbq('init',META_ID);window.fbq('track','PageView');}
+      if(c.m&&ADS_ID&&!loaded.ads){loaded.ads=1;window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:c.a?'granted':'denied'});window.gtag('js',new Date());window.gtag('config',ADS_ID);load('https://www.googletagmanager.com/gtag/js?id='+ADS_ID);}
     }
     var box=null;
     function btn(label,act){return '<button type="button" data-ck="'+act+'" style="flex:1 1 140px;min-height:48px;padding:0 18px;border-radius:999px;border:2px solid #cdf564;background:#cdf564;color:#000aff;font:inherit;font-weight:700;font-size:15px;cursor:pointer">'+label+'</button>';}
@@ -65,13 +67,13 @@
       box.setAttribute('role','dialog');box.setAttribute('aria-label','Gestion des cookies');
       box.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:100;max-width:680px;margin:0 auto;max-height:80vh;overflow:auto;background:#000aff;color:#fffcf1;border-radius:28px;padding:clamp(18px,3vw,28px);font-family:Poppins,sans-serif;box-shadow:0 20px 60px rgba(0,10,40,0.3)';
       box.innerHTML='<p style="margin:0 0 6px;font-weight:700;font-size:18px;letter-spacing:-0.02em;color:#cdf564">Vos choix de cookies</p>'
-        +'<p style="margin:0 0 16px;font-size:14px;line-height:1.55">Avec votre accord, nous utilisons des cookies de mesure d’audience (Google Analytics) et de publicité (Meta). <a href="/mentions-legales#confidentialite" style="color:#cdf564;font-weight:600">En savoir plus</a></p>'
-        +'<div data-ck-panel'+(custom?'':' hidden')+' style="margin:0 0 16px;padding:4px 0;border-top:1px solid rgba(255,252,241,0.3);border-bottom:1px solid rgba(255,252,241,0.3)">'+sw('ck-a','Mesure d’audience (Google Analytics)',c.a)+sw('ck-m','Publicité (Meta)',c.m)+'</div>'
+        +'<p style="margin:0 0 16px;font-size:14px;line-height:1.55">Avec votre accord, nous utilisons des cookies de mesure d’audience et de publicité, pour comprendre comment notre site est utilisé et mesurer l’efficacité de nos annonces. <a href="/mentions-legales#confidentialite" style="color:#cdf564;font-weight:600">En savoir plus</a></p>'
+        +'<div data-ck-panel'+(custom?'':' hidden')+' style="margin:0 0 16px;padding:4px 0;border-top:1px solid rgba(255,252,241,0.3);border-bottom:1px solid rgba(255,252,241,0.3)">'+sw('ck-a','Mesure d’audience',c.a)+sw('ck-m','Publicité et mesure des annonces',c.m)+'</div>'
         +'<div style="display:flex;flex-wrap:wrap;gap:10px">'+btn('Tout accepter','all')+btn('Tout refuser','none')+(custom?btn('Enregistrer mes choix','save'):btn('Personnaliser','custom'))+'</div>';
       document.body.appendChild(box);
       var first=box.querySelector('button');if(first&&custom)first.focus();
     }
-    function save(a,m){var c={a:!!a,m:!!m,t:Date.now()};try{localStorage.setItem(KEY,JSON.stringify(c));}catch(e){}if(box){box.remove();box=null;}if((loaded.ga&&!c.a)||(loaded.meta&&!c.m)){location.reload();return;}apply(c);}
+    function save(a,m){var c={a:!!a,m:!!m,t:Date.now()};try{localStorage.setItem(KEY,JSON.stringify(c));}catch(e){}if(box){box.remove();box=null;}if((loaded.ga&&!c.a)||((loaded.meta||loaded.ads)&&!c.m)){location.reload();return;}apply(c);}
     document.addEventListener('click',function(e){
       var t=e.target.closest&&e.target.closest('[data-ck],[data-cookies]');if(!t)return;
       if(t.hasAttribute('data-cookies')){e.preventDefault();show(true);return;}

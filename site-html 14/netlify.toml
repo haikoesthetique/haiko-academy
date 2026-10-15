@@ -5,3 +5,8 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
   included_files = ["netlify/functions/catalogue.js"]
+
+[[headers]]
+  for = "/brochure-cap-esthetique-2027.pdf"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
