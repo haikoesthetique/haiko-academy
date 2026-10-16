@@ -18,23 +18,35 @@ head_shared = tpl[tpl.index('<link rel="preconnect"'):tpl.index("</head>")]
 body_top = tpl[tpl.index("<body>")+len("<body>"):tpl.index('<main id="contenu"')]
 footer = tpl[tpl.index("<footer"):tpl.index("</body>")]
 
-NAV_STYLE = ".xblog:hover{background:rgba(0,10,255,0.06) !important}"
-DESK_LI = ('<li style="display:flex;position:relative"><a href="/blog" style="position:relative;display:flex;align-items:center;'
-           'min-height:44px;padding:0 14px;border-radius:999px;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;'
-           'color:#000aff;text-decoration:none" class="xblog">Blog</a></li>\n          ')
-MOB_LI = ('<li><a href="/blog" style="display:flex;align-items:center;min-height:56px;font-family:Poppins,sans-serif;font-weight:700;'
-          'font-size:36px;letter-spacing:-0.04em;color:#cdf564;text-decoration:none">Blog</a></li>\n          ')
+# Ancien lien « Blog » du menu du haut (retiré à la demande de Servane : le blog est dans le pied de page)
+OLD_STYLE = "<style>.xblog:hover{background:rgba(0,10,255,0.06) !important}</style>\n"
+OLD_DESK = ('<li style="display:flex;position:relative"><a href="/blog" style="position:relative;display:flex;align-items:center;'
+            'min-height:44px;padding:0 14px;border-radius:999px;font-family:Poppins,sans-serif;font-size:14px;font-weight:500;'
+            'color:#000aff;text-decoration:none" class="xblog">Blog</a></li>\n          ')
+OLD_MOB = ('<li><a href="/blog" style="display:flex;align-items:center;min-height:56px;font-family:Poppins,sans-serif;font-weight:700;'
+           'font-size:36px;letter-spacing:-0.04em;color:#cdf564;text-decoration:none">Blog</a></li>\n          ')
+
+FOOT_STYLE = "<style>.xblogf:hover{text-decoration:underline !important;color:#fffcf1 !important}</style>\n"
+FOOT_LI = ('\n          <li><a href="/blog" style="display:flex;align-items:center;min-height:44px;color:#fffcf1;'
+           'text-decoration:none;font-size:15px" class="xblogf">Le blog</a></li>')
 
 def add_blog_nav(page):
-    if 'href="/blog"' in page:
+    """Retire le lien Blog du menu du haut et place « Le blog » dans le pied de page (rubrique Nos établissements)."""
+    for old in (OLD_DESK, OLD_MOB, OLD_STYLE):
+        page = page.replace(old, "")
+    page = page.replace('href="/blog" aria-current="page" style', 'href="/blog" style')
+    if 'class="xblogf"' in page or "<footer" not in page:
         return page
-    i = page.index('<a href="/contact"', page.index('<nav aria-label="Navigation principale"'))
-    li = page.rfind("<li", 0, i)
-    page = page[:li] + DESK_LI + page[li:]
-    m = page.index('id="menu-mobile"')
-    i = page.index('<li><a href="/contact"', m)
-    page = page[:i] + MOB_LI + page[i:]
-    page = page.replace("</head>", f"<style>{NAV_STYLE}</style>\n</head>", 1)
+    f = page.index("<footer")
+    i = page.find('<a href="/#ecole"', f)
+    if i == -1:
+        i = page.find('<a href="/mentions-legales"', f)
+    if i == -1:
+        return page
+    end = page.index("</li>", i) + len("</li>")
+    page = page[:end] + FOOT_LI + page[end:]
+    if FOOT_STYLE not in page:
+        page = page.replace("</head>", FOOT_STYLE + "</head>", 1)
     return page
 
 POST_CSS = """<style>
@@ -113,7 +125,7 @@ def head(title, meta, canonical, og_type="website", extra=""):
 
 def page(title, meta, canonical, main, og_type="website", extra=""):
     p = head(title, meta, canonical, og_type, extra) + body_top + main + "\n\n" + footer + "</body>\n</html>\n"
-    return add_blog_nav(p).replace('href="/blog" style', 'href="/blog" aria-current="page" style') if canonical.endswith("/blog") else add_blog_nav(p)
+    return add_blog_nav(p)
 
 def article_page(a):
     url = f"{BASE}/blog/{a['slug']}"
@@ -212,7 +224,16 @@ for root, _, files in os.walk(SITE):
     for f in files:
         if f.endswith(".html"):
             p = os.path.join(root, f); s = open(p, encoding="utf-8").read()
-            if '<nav aria-label="Navigation principale"' in s:
+            if "<footer" in s:
                 n = add_blog_nav(s)
                 if n != s: open(p, "w", encoding="utf-8").write(n)
 print("ok", file=sys.stderr)
+
+# --- Netlify : toujours construire (sinon les déploiements sont annulés à tort) ---
+toml = os.path.join(SITE, "netlify.toml")
+if os.path.exists(toml):
+    t = open(toml, encoding="utf-8").read()
+    if "ignore" not in t and "[build]" in t:
+        t = t.replace("[build]", '[build]\n  ignore = "exit 1"', 1)
+        open(toml, "w", encoding="utf-8").write(t)
+
