@@ -1,5 +1,8 @@
 [build]
   publish = "."
+  # Toujours construire : la détection automatique "pas de changement" se trompe
+  # avec le nom de dossier "site-html 14" et annulait chaque déploiement.
+  ignore = "exit 1"
 
 [functions]
   directory = "netlify/functions"
