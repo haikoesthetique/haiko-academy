@@ -35,12 +35,13 @@ def add_blog_nav(page):
     for old in (OLD_DESK, OLD_MOB, OLD_STYLE):
         page = page.replace(old, "")
     page = page.replace('href="/blog" aria-current="page" style', 'href="/blog" style')
+    page = page.replace('href="/blog/" aria-current="page" style', 'href="/blog/" style')
     if 'class="xblogf"' in page or "<footer" not in page:
         return page
     f = page.index("<footer")
     i = page.find('<a href="/#ecole"', f)
     if i == -1:
-        i = page.find('<a href="/mentions-legales"', f)
+        i = page.find('<a href="/mentions-legales', f)
     if i == -1:
         return page
     end = page.index("</li>", i) + len("</li>")
@@ -228,6 +229,11 @@ for root, _, files in os.walk(SITE):
                 n = add_blog_nav(s)
                 if n != s: open(p, "w", encoding="utf-8").write(n)
 print("ok", file=sys.stderr)
+
+# --- slash final sur toutes les URL de pages (évite la boucle de redirection Netlify / Google) ---
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import slash_final
+print(f"slash final : {slash_final.normaliser(SITE)} fichiers modifiés", file=sys.stderr)
 
 # --- Netlify : toujours construire (sinon les déploiements sont annulés à tort) ---
 toml = os.path.join(SITE, "netlify.toml")

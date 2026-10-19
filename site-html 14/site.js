@@ -30,7 +30,7 @@
             var h=document.createElement('p');h.style.cssText='margin:0;font-weight:700;font-size:clamp(24px,2.2vw,32px);line-height:1.1;letter-spacing:-0.04em;color:#000aff';h.textContent='Merci '+p.trim()+' ! On vous rappelle très vite.';
             m.appendChild(h);form.replaceWith(m);
           } else {
-            location.href='/merci?demande='+(form.getAttribute('data-demande')||'contact');
+            location.href='/merci/?demande='+(form.getAttribute('data-demande')||'contact');
           }
         })
         .catch(function () {
@@ -41,7 +41,7 @@
     });
   });
   // Formulaires : envoyés par Netlify Forms (notifications email à configurer dans Netlify > Forms).
-  var d=new URLSearchParams(location.search).get('demande');if(!d&&location.pathname.indexOf('/merci')===0){try{d=sessionStorage.getItem('haiko-demande');sessionStorage.removeItem('haiko-demande')}catch(e){}}
+  var d=new URLSearchParams(location.search).get('demande');if(!d&&location.pathname.indexOf('/merci/')===0){try{d=sessionStorage.getItem('haiko-demande');sessionStorage.removeItem('haiko-demande')}catch(e){}}
   var ok="Votre demande a bien été reçue. Nous revenons vers vous sous 48 h maximum.";
   var M={cap:['PROGRAMME CAP',ok],drainage:['DRAINAGE LYMPHATIQUE BRÉSILIEN',ok],kobido:['FORMATION KOBIDO',ok],maderotherapie:['FORMATION MADÉROTHÉRAPIE',ok],hydraface:['FORMATION HYDRAFACE',ok],nanoneedling:['FORMATION NANONEEDLING',ok],peeling:['FORMATION PEELING ESTHÉTIQUE',ok],rappel:['DEMANDE DE RAPPEL',"Merci, nous vous rappelons très vite."],contact:['CONTACT',"Votre message a bien été transmis. Nous revenons vers vous sous 48 h maximum."]};
   if(d&&M[d]){var e1=document.querySelector('[data-merci="eyebrow"]'),e2=document.querySelector('[data-merci="message"]');if(e1)e1.textContent=M[d][0];if(e2)e2.textContent=M[d][1];}
@@ -67,7 +67,7 @@
       box.setAttribute('role','dialog');box.setAttribute('aria-label','Gestion des cookies');
       box.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:100;max-width:680px;margin:0 auto;max-height:80vh;overflow:auto;background:#000aff;color:#fffcf1;border-radius:28px;padding:clamp(18px,3vw,28px);font-family:Poppins,sans-serif;box-shadow:0 20px 60px rgba(0,10,40,0.3)';
       box.innerHTML='<p style="margin:0 0 6px;font-weight:700;font-size:18px;letter-spacing:-0.02em;color:#cdf564">Vos choix de cookies</p>'
-        +'<p style="margin:0 0 16px;font-size:14px;line-height:1.55">Avec votre accord, nous utilisons des cookies de mesure d’audience et de publicité, pour comprendre comment notre site est utilisé et mesurer l’efficacité de nos annonces. <a href="/mentions-legales#confidentialite" style="color:#cdf564;font-weight:600">En savoir plus</a></p>'
+        +'<p style="margin:0 0 16px;font-size:14px;line-height:1.55">Avec votre accord, nous utilisons des cookies de mesure d’audience et de publicité, pour comprendre comment notre site est utilisé et mesurer l’efficacité de nos annonces. <a href="/mentions-legales/#confidentialite" style="color:#cdf564;font-weight:600">En savoir plus</a></p>'
         +'<div data-ck-panel'+(custom?'':' hidden')+' style="margin:0 0 16px;padding:4px 0;border-top:1px solid rgba(255,252,241,0.3);border-bottom:1px solid rgba(255,252,241,0.3)">'+sw('ck-a','Mesure d’audience',c.a)+sw('ck-m','Publicité et mesure des annonces',c.m)+'</div>'
         +'<div style="display:flex;flex-wrap:wrap;gap:10px">'+btn('Tout accepter','all')+btn('Tout refuser','none')+(custom?btn('Enregistrer mes choix','save'):btn('Personnaliser','custom'))+'</div>';
       document.body.appendChild(box);
