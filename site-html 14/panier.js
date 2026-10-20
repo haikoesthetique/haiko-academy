@@ -55,6 +55,7 @@
     var almaOk = !!cat().almaActif && total > 0 && total <= (cat().almaMax || 2000);
     ['2', '3', '4'].forEach(function (k) { var el = q('[data-plan-info="alma-' + k + '"]'); if (el) el.textContent = !total ? '' : almaOk ? k + ' × ' + eur(Math.round(total * 100 / Number(k)) / 100) : 'au-delà de ' + eur(cat().almaMax || 2000); });
     var p1 = q('[data-plan-info="stripe-1"]'); if (p1) p1.textContent = total ? eur(total) : '';
+    var ps = q('[data-plan-info="scalapay"]'); if (ps) ps.textContent = total ? '4 × ' + eur(Math.round(total * 25) / 100) : '';
     document.querySelectorAll('[data-pay]').forEach(function (b) { var k = b.getAttribute('data-pay'); if (!items.length) b.disabled = true; else if (k.indexOf('alma') === 0) b.disabled = !almaOk; else if (k !== 'stripe-10') b.disabled = false; });
   }
 
@@ -82,9 +83,34 @@
     if (a) { e.preventDefault(); var id = a.getAttribute('data-add'); var s = q('select[data-session-for="' + id + '"]'); add(id, s ? s.value : ''); return; }
     var r = e.target.closest && e.target.closest('[data-retirer]');
     if (r) { var items = read(); items.splice(Number(r.getAttribute('data-retirer')), 1); write(items); return; }
+    var am = e.target.closest && e.target.closest('[data-alma-modal]');
+    if (am) { e.preventDefault(); almaModal(am); return; }
     var p = e.target.closest && e.target.closest('[data-pay]');
     if (p) { e.preventDefault(); pay(p.getAttribute('data-pay')); }
   });
+
+  function almaModal(opener) {
+    var noms = read().map(function (it) { var x = find(it.id); return x ? x.nom : ''; }).filter(Boolean);
+    var sujet = 'Demande de lien de paiement Alma – ' + (noms.length ? noms.join(', ') : '[nom de la formation]');
+    var href = 'mailto:contact@centrehaiko.com?subject=' + encodeURIComponent(sujet);
+    var ov = document.createElement('div');
+    ov.setAttribute('style', 'position:fixed;inset:0;z-index:200;background:rgba(0,10,80,0.55);display:flex;align-items:center;justify-content:center;padding:16px;font-family:Poppins,sans-serif');
+    ov.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="alma-modal-titre" style="position:relative;width:100%;max-width:480px;max-height:calc(100vh - 32px);overflow-y:auto;background:#fffcf1;color:#000aff;border-radius:32px;padding:clamp(28px,5vw,40px)">'
+      + '<button type="button" data-alma-close="" aria-label="Fermer" style="position:absolute;top:14px;right:14px;width:44px;height:44px;border:0;border-radius:999px;background:#000aff;color:#cdf564;font:inherit;font-size:22px;line-height:1;cursor:pointer">×</button>'
+      + '<p style="margin:0;align-self:flex-start;display:inline-block;padding:6px 14px;border-radius:999px;background:#f9b0e7;font-size:12px;font-weight:700;letter-spacing:0.12em">PAIEMENT EN 4X</p>'
+      + '<h2 id="alma-modal-titre" style="margin:16px 48px 0 0;font-weight:700;font-size:clamp(24px,4vw,30px);line-height:1.08;letter-spacing:-0.035em">Régler en 4x avec Alma</h2>'
+      + '<p style="margin:16px 0 0;font-size:16px;line-height:1.6">Pour régler en 4x avec Alma, contactez-nous et nous vous enverrons votre lien de paiement par SMS ou par e-mail.</p>'
+      + '<div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">'
+      + '<a href="tel:+33756979188" style="display:flex;flex-direction:column;gap:2px;min-height:64px;justify-content:center;padding:10px 22px;border-radius:24px;background:#000aff;color:#fffcf1;text-decoration:none"><span style="font-size:13px;color:#cdf564;font-weight:600">📞 Par téléphone</span><span style="font-size:18px;font-weight:700">07 56 97 91 88</span></a>'
+      + '<a href="' + href + '" style="display:flex;flex-direction:column;gap:2px;min-height:64px;justify-content:center;padding:10px 22px;border-radius:24px;border:2px solid #000aff;color:#000aff;text-decoration:none;word-break:break-all"><span style="font-size:13px;font-weight:600">✉️ Par e-mail</span><span style="font-size:17px;font-weight:700">contact@centrehaiko.com</span></a>'
+      + '</div></div>';
+    function close() { document.removeEventListener('keydown', onKey); ov.remove(); document.body.style.overflow = ''; if (opener) opener.focus(); }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    ov.addEventListener('click', function (e) { if (e.target === ov || (e.target.closest && e.target.closest('[data-alma-close]'))) close(); });
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(ov); document.body.style.overflow = 'hidden';
+    ov.querySelector('[data-alma-close]').focus();
+  }
 
   function init() {
     if (!cat().almaActif) document.querySelectorAll('[data-alma]').forEach(function (el) { el.hidden = true; });
