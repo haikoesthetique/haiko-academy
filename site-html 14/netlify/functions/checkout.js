@@ -1,4 +1,4 @@
-// Netlify Function : crée le paiement Stripe (1 fois ou 10 fois) ou Alma (2, 3 ou 4 fois).
+// Netlify Function : crée le paiement Stripe (1 fois par carte, ou 10 fois par prélèvement SEPA uniquement) ou Alma (2, 3 ou 4 fois).
 // Variables d'environnement à définir dans Netlify > Site configuration > Environment variables :
 //   STRIPE_SECRET_KEY   (sk_live_... ou sk_test_...)
 //   ALMA_API_KEY        (clé API Alma, live ou test)
@@ -52,10 +52,13 @@ exports.handler = async (event) => {
       if (dix) pd.recurring = { interval: 'month' };
       body.line_items[i] = { price_data: pd, quantity: 1 };
     });
+    // Paiement en 10 fois : uniquement par prélèvement SEPA (pas de carte bancaire).
+    if (dix) body.payment_method_types = ['sepa_debit'];
     if (dix) body.subscription_data = { metadata: { ...meta, echeances: '10' } };
     else body.payment_intent_data = { metadata: meta };
     const r = await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/x-www-form-urlencoded' }, body: form(body) });
     const out = await r.json();
+    if (!r.ok && dix && /sepa/i.test(JSON.stringify(out.error || {}))) { console.log('SEPA indisponible', JSON.stringify(out.error)); return json(502, { error: 'Le paiement en 10 fois par prélèvement est momentanément indisponible. Contactez-nous au 07 56 97 91 88 ou choisissez un autre mode de paiement.' }); }
     if (!r.ok) return json(502, { error: (out.error && out.error.message) || 'Erreur Stripe' });
     return json(200, { url: out.url });
   }

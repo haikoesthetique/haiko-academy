@@ -1,8 +1,10 @@
-// Netlify Function : webhook Stripe. Arrête automatiquement les paiements en 10 fois après la 10e échéance.
+// Netlify Function : webhook Stripe. Arrête automatiquement les paiements en 10 fois après la 10e échéance,
+// et prévient l'équipe + l'élève quand une formule CAP avec e-learning est payée (accès LearnyBox, voir _acces-elearning.js).
 // Dans Stripe > Développeurs > Webhooks, ajoutez l'URL https://haiko-academy.com/.netlify/functions/stripe-webhook
 // avec l'événement « checkout.session.completed », puis copiez la clé de signature dans STRIPE_WEBHOOK_SECRET.
 const crypto = require('crypto');
 const { store, compter } = require('./_places.js');
+const { accesElearning } = require('./_acces-elearning.js');
 exports.handler = async (event) => {
   const secret = process.env.STRIPE_WEBHOOK_SECRET, key = process.env.STRIPE_SECRET_KEY;
   const sig = event.headers['stripe-signature'] || '';
@@ -14,6 +16,8 @@ exports.handler = async (event) => {
   if (evt.type === 'checkout.session.completed') {
     const o = evt.data.object, cles = ((o.metadata && o.metadata.cles) || '').split(',').filter(Boolean);
     if (cles.length) await compter(store(event), cles, 'stripe:' + o.id);
+    const m = o.metadata || {};
+    try { await accesElearning(store(event), { id: 'stripe:' + o.id, email: (o.customer_details && o.customer_details.email) || o.customer_email, prenom: m.prenom || '', nom: m.nom || '', telephone: m.telephone || '', formations: m.formations || '', mode: o.mode === 'subscription' ? 'Stripe, 10 fois (prélèvement SEPA)' : 'Stripe, 1 fois', statut: o.payment_status }); } catch (e) { console.log('Accès e-learning, erreur', e.message); }
   }
   if (evt.type === 'checkout.session.completed' && evt.data.object.mode === 'subscription' && evt.data.object.subscription) {
     const d = new Date(); d.setMonth(d.getMonth() + 9); d.setDate(d.getDate() + 15);
