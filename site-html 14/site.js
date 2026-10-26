@@ -43,9 +43,41 @@
   // Formulaires : envoyés par Netlify Forms (notifications email à configurer dans Netlify > Forms).
   var d=new URLSearchParams(location.search).get('demande');if(!d&&location.pathname.indexOf('/merci')===0){try{d=sessionStorage.getItem('haiko-demande');sessionStorage.removeItem('haiko-demande')}catch(e){}}
   var ok="Votre demande a bien été reçue. Nous revenons vers vous sous 48 h maximum.";
-  var M={cap:['PROGRAMME CAP',ok],drainage:['DRAINAGE LYMPHATIQUE BRÉSILIEN',ok],kobido:['FORMATION KOBIDO',ok],maderotherapie:['FORMATION MADÉROTHÉRAPIE',ok],hydraface:['FORMATION HYDRAFACE',ok],nanoneedling:['FORMATION NANONEEDLING',ok],peeling:['FORMATION PEELING ESTHÉTIQUE',ok],rappel:['DEMANDE DE RAPPEL',"Merci, nous vous rappelons très vite."],contact:['CONTACT',"Votre message a bien été transmis. Nous revenons vers vous sous 48 h maximum."]};
+  var M={cap:['PROGRAMME CAP',ok],drainage:['DRAINAGE LYMPHATIQUE BRÉSILIEN',ok],kobido:['FORMATION KOBIDO',ok],maderotherapie:['FORMATION MADÉROTHÉRAPIE',ok],hydraface:['FORMATION HYDRAFACE',ok],nanoneedling:['FORMATION NANONEEDLING',ok],peeling:['FORMATION PEELING ESTHÉTIQUE',ok],rappel:['DEMANDE DE RAPPEL',"Merci, nous vous rappelons très vite."],visio:['VISIO CAP ESTHÉTIQUE · 4 NOVEMBRE',"Votre place est réservée ! Un e-mail de confirmation vient de vous être envoyé avec toutes les informations pour la visio du mercredi 4 novembre à 19 h. Pensez à vérifier vos spams."],contact:['CONTACT',"Votre message a bien été transmis. Nous revenons vers vous sous 48 h maximum."]};
   if(d&&M[d]){var e1=document.querySelector('[data-merci="eyebrow"]'),e2=document.querySelector('[data-merci="message"]');if(e1)e1.textContent=M[d][0];if(e2)e2.textContent=M[d][1];}
   var eb=document.querySelector('[data-merci="brochure"]');if(eb&&d&&d!=='cap'&&d!=='rappel')eb.remove();
+  // Pop-up « Visio gratuite CAP esthétique » : s'ouvre 3 s après l'arrivée, jusqu'au 4/11/2026 19 h
+  (function(){
+    var FIN=Date.parse('2026-11-04T19:00:00+01:00'), KEY='haiko-popup-visio-cap', URL='/visio-cap-esthetique';
+    function mark(val){try{localStorage.setItem(KEY,val);sessionStorage.setItem(KEY,'1');}catch(e){}}
+    document.querySelectorAll('form[name="visio-cap"]').forEach(function(f){f.addEventListener('submit',function(){mark('inscrite');});});
+    if(Date.now()>FIN)return;
+    if(/^\/(visio-cap-esthetique|merci|paiement-confirme)/.test(location.pathname))return;
+    try{var v=localStorage.getItem(KEY);if(v==='inscrite'||(v&&Date.now()-(+v)<1000*60*60*24*2))return;if(sessionStorage.getItem(KEY))return;}catch(e){}
+    function busy(){var m=document.getElementById('menu-mobile');return document.querySelector('[role="dialog"][aria-label="Gestion des cookies"]')||(m&&!m.hasAttribute('hidden'));}
+    function wait(){if(busy()){setTimeout(wait,600);return;}open();}
+    setTimeout(wait,3000);
+    function open(){
+      var last=document.activeElement;
+      var ov=document.createElement('div');
+      ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Visio gratuite : tout savoir sur le CAP esthétique en candidat libre, mercredi 4 novembre à 19 h');
+      ov.style.cssText='position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,6,90,0.55);opacity:0;transition:opacity .3s';
+      ov.innerHTML='<div style="position:relative;width:min(100%,720px);transform:translateY(16px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1)" data-pop-card>'
+        +'<a href="'+URL+'" data-pop-go style="display:block;border-radius:clamp(20px,3vw,32px);overflow:hidden;box-shadow:0 30px 80px rgba(0,10,40,0.35);background:#fffcf1"><img src="/images/visio-cap-esthetique-04-11.jpg" alt="Visio gratuite : tout savoir sur le CAP esthétique en candidat libre. Mercredi 04/11 à 19 h. Je m’inscris" width="1200" height="900" style="display:block;width:100%;height:auto;max-height:calc(100vh - 120px);object-fit:contain"></a>'
+        +'<button type="button" data-pop-close aria-label="Fermer" style="position:absolute;top:-14px;right:-6px;width:48px;height:48px;border-radius:999px;border:2px solid #fffcf1;background:#000aff;color:#fffcf1;font:700 22px/1 Poppins,sans-serif;cursor:pointer;box-shadow:0 6px 18px rgba(0,10,40,0.3)">×</button>'
+        +'</div>';
+      document.body.appendChild(ov);
+      var prevOv=document.body.style.overflow;document.body.style.overflow='hidden';
+      requestAnimationFrame(function(){ov.style.opacity='1';ov.querySelector('[data-pop-card]').style.transform='none';});
+      var close=ov.querySelector('[data-pop-close]');close.focus();
+      function shut(){mark(String(Date.now()));document.body.style.overflow=prevOv;ov.remove();document.removeEventListener('keydown',key);if(last&&last.focus)last.focus();}
+      function key(e){if(e.key==='Escape')shut();if(e.key==='Tab'){var f=[ov.querySelector('[data-pop-go]'),close];if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f[1].focus();}else if(!e.shiftKey&&document.activeElement===f[1]){e.preventDefault();f[0].focus();}}}
+      document.addEventListener('keydown',key);
+      close.addEventListener('click',shut);
+      ov.addEventListener('click',function(e){if(e.target===ov)shut();});
+      ov.querySelector('[data-pop-go]').addEventListener('click',function(){mark(String(Date.now()));});
+    }
+  })();
   // Bandeau cookies : GA et Meta chargés uniquement après consentement
   (function(){
     var GA_ID='', META_ID='', ADS_ID='AW-366799775'; // A RENSEIGNER : GA_ID='G-XXXXXXX' ; META_ID='identifiant Pixel Meta'
