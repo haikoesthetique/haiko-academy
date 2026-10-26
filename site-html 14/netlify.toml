@@ -1,4 +1,5 @@
 [build]
+  command = "python3 ../_outils-blog/mise_a_jour_site.py ."
   ignore = "exit 1"
   publish = "."
 

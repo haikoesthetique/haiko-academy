@@ -1,0 +1,36 @@
+# Filet de sécurité : si une nouvelle version du site (Claude Design) a effacé la commande
+# de mise à jour automatique dans « site-html 14/netlify.toml », on la remet, on remet le blog,
+# le lien « Le blog » et le bouton « Espace élèves », et on enregistre la correction.
+# Dans le cas normal (commande présente), il ne se passe rien ici : Netlify s'en charge à la mise en ligne.
+name: Remise en place du site
+
+on:
+  push:
+    branches: [main]
+    paths: ["site-html 14/**"]
+
+permissions:
+  contents: write
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier la commande de mise à jour Netlify
+        id: verif
+        run: |
+          if grep -q "mise_a_jour_site.py" "site-html 14/netlify.toml" 2>/dev/null; then
+            echo "ok=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=0" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Remettre en place
+        if: steps.verif.outputs.ok == '0'
+        run: |
+          python3 _outils-blog/mise_a_jour_site.py "site-html 14" --toml
+          git config user.name "Mise à jour automatique"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A "site-html 14"
+          git diff --cached --quiet || git commit -m "Remise en place automatique : blog, lien du blog, Espace élèves, mise à jour Netlify"
+          git push

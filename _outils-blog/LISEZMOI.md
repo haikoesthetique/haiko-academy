@@ -18,3 +18,12 @@ Il est sans effet si le bouton est déjà présent. À relancer après une mise 
 ou après `generer_blog.py` :
 
     python3 _outils-blog/espace_eleves.py "site-html 14"
+
+## Mise à jour automatique (rien à faire)
+
+À chaque mise en ligne, Netlify lance `mise_a_jour_site.py` (commande de build dans
+`site-html 14/netlify.toml`) : le blog, le lien « Le blog » du pied de page et le bouton
+« Espace élèves » sont remis en place tout seuls, même après une nouvelle version Claude Design.
+
+Si une nouvelle version efface cette commande de `netlify.toml`, l'action GitHub
+« Remise en place du site » (`.github/workflows/`) la remet et corrige le site automatiquement.
