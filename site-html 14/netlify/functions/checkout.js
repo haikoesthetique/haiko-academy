@@ -46,7 +46,7 @@ exports.handler = async (event) => {
     const key = process.env.STRIPE_SECRET_KEY; if (!key) return json(500, { error: 'Paiement Stripe non configuré' });
     const dix = plan === 'stripe-10';
     const body = { mode: dix ? 'subscription' : 'payment', customer_email: client.email, locale: 'fr',
-      success_url: base + '/paiement-confirme?session_id={CHECKOUT_SESSION_ID}', cancel_url: base + '/inscription?annule=1', metadata: meta, line_items: {} };
+      success_url: base + '/paiement-confirme/?session_id={CHECKOUT_SESSION_ID}', cancel_url: base + '/inscription/?annule=1', metadata: meta, line_items: {} };
     lignes.forEach((l, i) => {
       const pd = { currency: 'eur', product_data: { name: l.p.nom, description: l.session }, unit_amount: dix ? Math.round(l.p.prix * 10) : l.p.prix * 100 };
       if (dix) pd.recurring = { interval: 'month' };
@@ -68,7 +68,7 @@ exports.handler = async (event) => {
     if (total > (CAT.almaMax || 2000) * 100) return json(400, { error: 'Le paiement en 2, 3 ou 4 fois n’est pas disponible au-delà de ' + (CAT.almaMax || 2000) + ' €' });
     const key = process.env.ALMA_API_KEY; if (!key) return json(500, { error: 'Paiement Alma non configuré' });
     const api = process.env.ALMA_MODE === 'live' ? 'https://api.getalma.eu' : 'https://api.sandbox.getalma.eu';
-    const body = { payment: { purchase_amount: total, installments_count: Number(m[1]), locale: 'fr', return_url: base + '/paiement-confirme?alma=1', customer_cancel_url: base + '/inscription?annule=1', ipn_callback_url: base + '/.netlify/functions/alma-ipn', custom_data: meta },
+    const body = { payment: { purchase_amount: total, installments_count: Number(m[1]), locale: 'fr', return_url: base + '/paiement-confirme/?alma=1', customer_cancel_url: base + '/inscription/?annule=1', ipn_callback_url: base + '/.netlify/functions/alma-ipn', custom_data: meta },
       customer: { first_name: client.prenom, last_name: client.nom, email: client.email, phone: client.telephone } };
     const r = await fetch(api + '/v1/payments', { method: 'POST', headers: { Authorization: 'Alma-Auth ' + key, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const out = await r.json().catch(() => ({}));
