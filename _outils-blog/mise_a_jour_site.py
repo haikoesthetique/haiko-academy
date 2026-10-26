@@ -96,6 +96,7 @@ def main():
     if articles:
         subprocess.run([sys.executable, os.path.join(ICI, 'generer_blog.py'), site] + articles, check=True)
     subprocess.run([sys.executable, os.path.join(ICI, 'espace_eleves.py'), site], check=True)
+    subprocess.run([sys.executable, os.path.join(ICI, 'fil_ariane.py'), site], check=True)
     print('Mise à jour automatique du site : terminée')
 
 
