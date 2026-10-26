@@ -24,6 +24,8 @@ ou après `generer_blog.py` :
 À chaque mise en ligne, Netlify lance `mise_a_jour_site.py` (commande de build dans
 `site-html 14/netlify.toml`) : le blog, le lien « Le blog » du pied de page et le bouton
 « Espace élèves » sont remis en place tout seuls, même après une nouvelle version Claude Design.
+Les ajouts faits hors Claude Design (page et pop-up de la visio, bandeau, rappels, fonctions de paiement
+et d'e-mails) sont gardés dans `_ajouts-site/` et remis en place de la même façon.
 
 Si une nouvelle version efface cette commande de `netlify.toml`, l'action GitHub
 « Remise en place du site » (`.github/workflows/`) la remet et corrige le site automatiquement.

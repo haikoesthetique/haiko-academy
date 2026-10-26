@@ -1,0 +1,1 @@
+visio:['VISIO CAP ESTHÉTIQUE · 4 NOVEMBRE',"Votre place est réservée ! Un e-mail de confirmation vient de vous être envoyé avec toutes les informations pour la visio du mercredi 4 novembre à 19 h. Pensez à vérifier vos spams."],
