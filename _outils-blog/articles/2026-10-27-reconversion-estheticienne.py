@@ -1,0 +1,148 @@
+CAP = "/cap-esthetique-candidat-libre-marseille"
+RAPPEL = "/etre-rappelee"
+VISIO = "/visio-cap-esthetique"
+ARTICLE_CAP = "/blog/inscription-cap-esthetique-candidat-libre-2027"
+ONISEP = "https://www.onisep.fr/ressources/univers-metier/metiers/estheticien-cosmeticien-estheticienne-cosmeticienne"
+CYCLADES = "https://candidat.examens-concours.gouv.fr/cyccandidat/portal/accueil"
+MICRO = "https://entreprendre.service-public.fr/vosdroits/F23264"
+
+ARTICLE = {
+ "slug": "reconversion-estheticienne",
+ "title": "Reconversion esthéticienne : les étapes pour vous lancer en 2027",
+ "seo_title": "Reconversion esthéticienne : les étapes pour 2027",
+ "meta": "Reconversion esthéticienne : le diplôme à viser, les épreuves du CAP, le temps à prévoir et le calendrier 2027 pour changer de métier sereinement.",
+ "keyword": "reconversion esthéticienne",
+ "date": "2026-10-27",
+ "excerpt": "Vous rêvez de changer de vie et de travailler dans l'esthétique ? Diplôme à viser, épreuves, organisation avec un emploi, budget et calendrier 2027 : voici les étapes d'une reconversion esthéticienne réussie.",
+ "card": "Le diplôme à viser, les épreuves, le temps à prévoir et le calendrier 2027 pour changer de métier.",
+ "image": "/images/cap-modelage-visage-mains.jpg", "image_w": 720, "image_h": 894,
+ "image_alt": "Modelage du visage pendant une préparation au CAP, première étape d'une reconversion esthéticienne",
+ "body": [
+  ("p", "Vous travaillez dans un tout autre domaine, et l'esthétique vous attire depuis longtemps ? Vous n'êtes pas seule."),
+  ("p", "Chaque année, de nombreuses femmes adultes choisissent de changer de métier pour travailler avec leurs mains, au contact des clientes."),
+  ("p", "Une reconversion esthéticienne se prépare avec méthode. Dans ce guide, nous détaillons les étapes, du choix du diplôme jusqu'au jour de l'examen."),
+
+  ("h2", "Pourquoi choisir l'esthétique ?"),
+  ("p", "Le métier d'esthéticienne associe technique, relation client et sens du détail. Il se pratique en institut, en spa, à domicile ou à votre compte."),
+  ("p", "La fiche métier de l'[Onisep](" + ONISEP + ") décrit bien la diversité des missions : soins du visage et du corps, épilations, maquillage, conseil et vente de produits."),
+  ("h3", "Un métier concret"),
+  ("p", "Beaucoup de femmes en reconversion cherchent un travail où l'on voit le résultat de ses gestes. L'esthétique répond à cette envie."),
+  ("p", "C'est aussi un métier exigeant. Il demande de la rigueur, une bonne résistance physique et un vrai goût pour le contact humain."),
+  ("h3", "Les bonnes questions à vous poser"),
+  ("ul", [
+    "Ai-je envie de travailler debout, en cabine, plusieurs heures par jour ?",
+    "Est-ce que j'aime conseiller et accompagner des clientes ?",
+    "Suis-je prête à m'entraîner régulièrement pendant plusieurs mois ?",
+    "Quel temps puis-je dégager chaque semaine, à côté de mon emploi actuel ?",
+  ]),
+
+  ("h2", "Quel diplôme viser ?"),
+  ("p", "Pour exercer le métier d'esthéticienne, le diplôme de référence est le CAP Esthétique Cosmétique Parfumerie, souvent appelé CAP esthétique."),
+  ("p", "C'est un diplôme d'État. Il est délivré par l'Éducation nationale, après réussite à l'examen."),
+  ("h3", "Faut-il déjà un diplôme ?"),
+  ("p", "Non. Aucun diplôme n'est requis pour vous présenter au CAP esthétique, pas même le brevet."),
+  ("p", "Si la préparation se fait à distance, il n'y a aucune condition d'âge. Dans les autres cas, il faut avoir 18 ans au 31 décembre de l'année de l'examen et ne pas être inscrite dans un établissement scolaire."),
+  ("h3", "Le choix du candidat libre"),
+  ("p", "En candidat libre, vous vous inscrivez vous-même à l'examen et vous choisissez votre façon de vous préparer. C'est la voie la plus souple pour une adulte qui travaille."),
+  ("p", "Elle demande en revanche de l'organisation. C'est là qu'une préparation structurée fait la différence."),
+
+  ("h2", "Ce que l'examen vous demande"),
+  ("p", "Le domaine professionnel du CAP comprend trois épreuves. Pour le valider, il faut obtenir une moyenne d'au moins 10/20 sur les trois."),
+  ("h3", "EP1 : visage, mains et pieds"),
+  ("p", "Coefficient 6, durée 2 h 45. Un écrit de 45 minutes, puis une pratique sur modèle : soin du visage, soin des mains ou des pieds, maquillage."),
+  ("h3", "EP2 : épilations et ongles"),
+  ("p", "Coefficient 4, durée 2 h 30. Un écrit de 30 minutes, puis l'épilation des sourcils, de deux zones du corps et des techniques sur les ongles."),
+  ("img", "/images/cap-manucure-cuticules-instruments.jpg", 720, 1289,
+   "Entraînement à la manucure pendant une reconversion esthéticienne à Marseille",
+   "La manucure, un des gestes travaillés pour l'épreuve EP2"),
+  ("h3", "EP3 : relation clientèle"),
+  ("p", "Coefficient 4, à l'oral. Une simulation de vente avec prise de rendez-vous, puis la présentation d'un dossier suivie d'un entretien."),
+  ("p", "Le jour des épreuves pratiques, vous venez avec un modèle majeur, conforme au règlement de l'examen."),
+  ("h3", "Et les matières générales ?"),
+  ("p", "Si vous n'avez aucun diplôme, vous passez aussi les matières générales. Si vous êtes titulaire d'un CAP, d'un BEP, d'un bac ou plus, vous pouvez en être dispensée."),
+  ("p", "C'est souvent le cas des femmes en reconversion. Vérifiez votre situation au moment de l'inscription."),
+
+  ("h2", "Se reconvertir sans quitter son emploi"),
+  ("p", "C'est la question que l'on nous pose le plus. La réponse dépend du temps que vous pouvez consacrer à votre préparation."),
+  ("h3", "La théorie, à votre rythme"),
+  ("p", "Chez Haïko Academy, la théorie représente 200 heures en e-learning, accessibles pendant 24 mois. Vous avancez le soir, le week-end ou pendant vos pauses."),
+  ("p", "À titre indicatif, avec 8 heures par semaine, vous serez prête en environ 6 mois. Avec 4 heures par semaine, comptez plutôt 12 mois."),
+  ("h3", "La pratique, en deux formats"),
+  ("ul", [
+    "Formule Régulière : un dimanche sur deux, de novembre à avril, hors vacances scolaires.",
+    "Formule Intensive : une semaine du 22 au 26 février 2027, puis des examens blancs du 19 au 22 avril 2027.",
+  ]),
+  ("p", "Dans les deux cas, la pratique représente 65 heures à Marseille, en groupes de **6 élèves maximum**. La formatrice voit vos mains travailler et corrige chaque geste."),
+  ("h3", "Organiser votre semaine"),
+  ("p", "Le plus efficace est de bloquer des créneaux fixes dans votre agenda, comme un rendez-vous avec vous-même. Deux soirs par semaine et un moment le week-end suffisent souvent à garder le rythme."),
+  ("p", "Parlez-en aussi à votre entourage. Une reconversion demande du temps, et le soutien de vos proches vous aidera à tenir sur la durée."),
+  ("p", "Enfin, pensez à vos modèles d'entraînement. Une amie, une sœur ou une voisine peut vous aider à répéter vos gestes entre deux séances."),
+
+  ("h2", "Le calendrier de la session 2027"),
+  ("p", "Une reconversion esthéticienne se joue souvent sur le calendrier. Pour la session 2027, le premier rendez-vous arrive très vite."),
+  ("ul", [
+    "Jusqu'au jeudi 12 novembre 2026 à 18 h : inscription à l'examen dans l'académie d'Aix-Marseille.",
+    "De novembre 2026 à avril 2027 : pratique en formule Régulière.",
+    "Février et avril 2027 : pratique en formule Intensive.",
+    "D'avril à juin 2027 : épreuves professionnelles EP1, EP2 et EP3.",
+    "Du 31 mai au 2 juin 2027 : épreuves générales écrites.",
+    "Au plus tard mi-juillet 2027 : résultats.",
+  ]),
+  ("p", "Ces dates sont indicatives. Seules les informations officielles et votre convocation font foi."),
+  ("h3", "Ne manquez pas l'inscription"),
+  ("p", "L'inscription à l'examen se fait en ligne sur le [portail Cyclades](" + CYCLADES + "). Elle est distincte de l'inscription à la formation."),
+  ("p", "Nous avons détaillé chaque étape dans notre guide sur [l'inscription au CAP en candidat libre](" + ARTICLE_CAP + ")."),
+
+  ("h2", "Quel budget prévoir ?"),
+  ("p", "Chez Haïko Academy, trois formules existent, selon ce que vous souhaitez préparer avec nous."),
+  ("ul", [
+    "Théorie e-learning : 1 590 € TTC, ou 10 × 159 €.",
+    "Pratique Régulière ou Intensive : 1 990 € TTC, ou 10 × 199 €.",
+    "Combo théorie et pratique : 2 990 € TTC au lieu de 3 580 €, ou 10 × 299 €.",
+  ]),
+  ("p", "Le règlement se fait en autofinancement, avec un paiement sans frais en 2, 4 ou 10 fois, et sans frais de dossier."),
+  ("h3", "Les frais à anticiper"),
+  ("p", "Pensez aussi à votre kit de matériel pour les séances de pratique, à vos produits et à votre modèle le jour de l'examen, ainsi qu'à vos déplacements jusqu'à Marseille."),
+
+  ("h2", "Bien choisir sa préparation"),
+  ("p", "Toutes les préparations ne se ressemblent pas. Avant de vous engager, posez quelques questions simples."),
+  ("ul", [
+    "Combien d'heures de pratique encadrée, et avec combien d'élèves ?",
+    "Y a-t-il des examens blancs pour chaque épreuve ?",
+    "Qui répond à vos questions pendant la théorie, et comment ?",
+    "Les dates de pratique sont-elles compatibles avec votre emploi ?",
+  ]),
+  ("h3", "La Méthode Haïko"),
+  ("p", "Notre [préparation au CAP esthétique en candidat libre](" + CAP + ") suit cinq étapes : comprendre, apprendre, s'entraîner, se tester, maîtriser."),
+  ("p", "Elle comprend un examen blanc EP1, un examen blanc EP2 et un oral blanc EP3, avec des corrections individualisées. L'objectif : arriver à l'examen **préparée et entraînée**."),
+  ("p", "Haïko Academy propose une préparation. Le diplôme, lui, dépend de votre réussite à l'examen organisé par l'Éducation nationale."),
+
+  ("h2", "Après le CAP, se spécialiser"),
+  ("p", "Une fois diplômée, vous pouvez travailler en institut, en spa, à domicile ou à votre compte. Pour vous installer, le site [Entreprendre.Service-Public](" + MICRO + ") détaille le fonctionnement de la micro-entreprise."),
+  ("p", "Pour enrichir votre carte, Haïko Academy propose aussi six formations courtes, optionnelles et non incluses dans la préparation au CAP."),
+  ("ul", [
+    "Sans prérequis : drainage lymphatique brésilien, Kobido, madérothérapie.",
+    "Avec le CAP esthétique : nanoneedling, peeling esthétique.",
+    "Avec le CAP esthétique ou un diplôme d'infirmière : Hydraface.",
+  ]),
+  ("img", "/images/accueil-centre-haiko-marseille.jpg", 960, 679,
+   "Accueil du centre Haïko à Marseille, où se prépare une reconversion esthéticienne",
+   "L'accueil du centre Haïko, à Marseille 6e"),
+
+  ("h2", "Posez vos questions en direct"),
+  ("p", "Vous hésitez encore ? Nous organisons une [visio gratuite sur le CAP esthétique](" + VISIO + ") le mercredi 4 novembre 2026 à 19 h."),
+  ("p", "Au programme : les épreuves, la Méthode Haïko, les formules, le calendrier 2027, et toutes vos questions. Elle tombe juste avant la clôture des inscriptions."),
+  ("cta", "Vous préférez en parler directement ? Laissez-nous vos coordonnées, on vous rappelle pour faire le point sur votre projet de reconversion.", "Être rappelée", RAPPEL),
+
+  ("h2", "Votre reconversion à Marseille"),
+  ("p", "Haïko Academy est installée dans le 6e arrondissement de Marseille, à quelques minutes du métro Estrangin–Préfecture. Nous enseignons l'esthétique avancée, avec une préparation exigeante et orientée examen."),
+  ("p", "La théorie se suit en ligne, la pratique a lieu dans les cabines du centre Haïko. Découvrez le programme complet sur notre page CAP esthétique, ou demandez à être rappelée."),
+ ],
+ "faq": [
+  ("Peut-on faire une reconversion esthéticienne sans diplôme ?", "Oui. Aucun diplôme n'est requis pour vous présenter au CAP esthétique en candidat libre. Sans diplôme, vous passerez aussi les matières générales, qui ne sont pas préparées par Haïko Academy."),
+  ("Combien de temps dure une reconversion esthéticienne ?", "Chez Haïko Academy, la préparation se construit en 6 à 24 mois. La théorie représente 200 heures en e-learning, accessibles 24 mois, et la pratique 65 heures à Marseille."),
+  ("Peut-on préparer le CAP esthétique en travaillant ?", "Oui. La théorie se suit en ligne, à votre rythme. La pratique se fait un dimanche sur deux en formule Régulière, ou pendant les vacances scolaires en formule Intensive."),
+  ("Quand s'inscrire à l'examen du CAP 2027 ?", "Dans l'académie d'Aix-Marseille, l'inscription en candidat libre se fait sur le portail Cyclades jusqu'au jeudi 12 novembre 2026 à 18 h. Elle est distincte de l'inscription à la formation."),
+  ("Haïko Academy délivre-t-elle le CAP esthétique ?", "Non. Haïko Academy propose une préparation au CAP. Le diplôme est délivré par l'Éducation nationale, après réussite à l'examen."),
+ ],
+}
