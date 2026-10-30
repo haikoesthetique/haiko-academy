@@ -17,7 +17,7 @@ exports.handler = async (event) => {
     const o = evt.data.object, cles = ((o.metadata && o.metadata.cles) || '').split(',').filter(Boolean);
     if (cles.length) await compter(store(event), cles, 'stripe:' + o.id);
     const m = o.metadata || {};
-    try { await accesElearning(store(event), { id: 'stripe:' + o.id, email: (o.customer_details && o.customer_details.email) || o.customer_email, prenom: m.prenom || '', nom: m.nom || '', telephone: m.telephone || '', formations: m.formations || '', mode: o.mode === 'subscription' ? 'Stripe, 10 fois (prélèvement SEPA)' : 'Stripe, 1 fois', statut: o.payment_status }); } catch (e) { console.log('Accès e-learning, erreur', e.message); }
+    try { await accesElearning(store(event), { id: 'stripe:' + o.id, email: (o.customer_details && o.customer_details.email) || o.customer_email, prenom: m.prenom || '', nom: m.nom || '', telephone: m.telephone || '', formations: m.formations || '', mode: o.mode === 'subscription' ? 'Stripe, ' + (m.echeances || '10') + ' fois (prélèvement SEPA)' : 'Stripe, 1 fois', statut: o.payment_status }); } catch (e) { console.log('Accès e-learning, erreur', e.message); }
   }
   if (evt.type === 'checkout.session.completed' && evt.data.object.mode === 'subscription' && evt.data.object.subscription) {
     // Nombre d'échéances : metadata « echeances » (lien de paiement ou site), 10 par défaut (paiement en 10 fois du site).
