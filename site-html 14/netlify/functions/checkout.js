@@ -1,4 +1,4 @@
-// Netlify Function : crée le paiement Stripe (1 fois par carte, ou 10 fois par prélèvement SEPA uniquement) ou Alma (2, 3 ou 4 fois).
+// Netlify Function : crée le paiement Stripe (1 fois par carte, ou 4 / 10 fois par prélèvement SEPA uniquement) ou Alma (2, 3 ou 4 fois).
 // Variables d'environnement à définir dans Netlify > Site configuration > Environment variables :
 //   STRIPE_SECRET_KEY   (sk_live_... ou sk_test_...)
 //   ALMA_API_KEY        (clé API Alma, live ou test)
@@ -27,6 +27,7 @@ exports.handler = async (event) => {
   for (const it of items) {
     const p = CAT.produits.find(x => x.id === it.id);
     if (!p) return json(400, { error: 'Formation inconnue' });
+    if (p.fin && Date.now() > Date.parse(p.fin)) return json(400, { error: 'Cette offre est terminée. Contactez-nous au 07 56 97 91 88.' });
     let s = null;
     if (p.sessions.length) { s = p.sessions.find(x => x.id === it.session); if (!s) return json(400, { error: 'Session invalide pour ' + p.nom }); }
     lignes.push({ p, s, session: s ? s.label : CAT.sansDate, cle: s ? p.id + '@' + s.id : null });
@@ -42,23 +43,26 @@ exports.handler = async (event) => {
   const resume = lignes.map(l => l.p.nom + ' — ' + l.session).join(' | ').slice(0, 480);
   const meta = { cles: cles.slice(0, 490), formations: resume, prenom: client.prenom, nom: client.nom, telephone: client.telephone, consentements: [client.renonciationElearning ? 'renonciation retractation e-learning' : '', client.debutAnticipe ? 'debut avant fin du delai' : ''].filter(Boolean).join(', ') || 'aucun' };
 
-  if (plan === 'stripe-1' || plan === 'stripe-10') {
+  if (plan === 'stripe-1' || plan === 'stripe-4' || plan === 'stripe-10') {
     const key = process.env.STRIPE_SECRET_KEY; if (!key) return json(500, { error: 'Paiement Stripe non configuré' });
-    const dix = plan === 'stripe-10';
+    // Paiement en plusieurs fois (4 ou 10) : abonnement mensuel arrêté par le webhook après la dernière échéance.
+    const nb = plan === 'stripe-10' ? 10 : plan === 'stripe-4' ? 4 : 1, dix = nb > 1;
+    if (dix && !lignes.every(l => l.p.groupe === 'cap')) return json(400, { error: 'Le paiement en ' + nb + ' fois est réservé aux formules CAP' });
+    if (dix) meta.echeances = String(nb);
     const body = { mode: dix ? 'subscription' : 'payment', customer_email: client.email, locale: 'fr',
       success_url: base + '/paiement-confirme/?session_id={CHECKOUT_SESSION_ID}', cancel_url: base + '/inscription/?annule=1', metadata: meta, line_items: {} };
     lignes.forEach((l, i) => {
-      const pd = { currency: 'eur', product_data: { name: l.p.nom, description: l.session }, unit_amount: dix ? Math.round(l.p.prix * 10) : l.p.prix * 100 };
+      const pd = { currency: 'eur', product_data: { name: l.p.nom, description: l.session }, unit_amount: dix ? Math.round(l.p.prix * 100 / nb) : l.p.prix * 100 };
       if (dix) pd.recurring = { interval: 'month' };
       body.line_items[i] = { price_data: pd, quantity: 1 };
     });
-    // Paiement en 10 fois : uniquement par prélèvement SEPA (pas de carte bancaire).
+    // Paiement en 4 ou 10 fois : uniquement par prélèvement SEPA (pas de carte bancaire).
     if (dix) body.payment_method_types = ['sepa_debit'];
-    if (dix) body.subscription_data = { metadata: { ...meta, echeances: '10' } };
+    if (dix) body.subscription_data = { metadata: { ...meta } };
     else body.payment_intent_data = { metadata: meta };
     const r = await fetch('https://api.stripe.com/v1/checkout/sessions', { method: 'POST', headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/x-www-form-urlencoded' }, body: form(body) });
     const out = await r.json();
-    if (!r.ok && dix && /sepa/i.test(JSON.stringify(out.error || {}))) { console.log('SEPA indisponible', JSON.stringify(out.error)); return json(502, { error: 'Le paiement en 10 fois par prélèvement est momentanément indisponible. Contactez-nous au 07 56 97 91 88 ou choisissez un autre mode de paiement.' }); }
+    if (!r.ok && dix && /sepa/i.test(JSON.stringify(out.error || {}))) { console.log('SEPA indisponible', JSON.stringify(out.error)); return json(502, { error: 'Le paiement en ' + nb + ' fois par prélèvement est momentanément indisponible. Contactez-nous au 07 56 97 91 88 ou choisissez un autre mode de paiement.' }); }
     if (!r.ok) return json(502, { error: (out.error && out.error.message) || 'Erreur Stripe' });
     return json(200, { url: out.url });
   }
