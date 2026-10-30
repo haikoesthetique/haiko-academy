@@ -268,6 +268,138 @@
           "label": "Nanoneedling : dimanche 12 décembre 2027 · Peeling : dimanche 20 juin 2027"
         }
       ]
+    },
+    {
+      "id": "cap-offre-speciale",
+      "groupe": "cap",
+      "prive": true,
+      "fin": "2026-11-01T20:00:00+01:00",
+      "nom": "CAP esthétique – Formule Combo Théorie + Pratique · Offre spéciale + formation courte offerte",
+      "detail": "200 h de théorie + 65 h de pratique à Marseille + 1 formation courte offerte · offre réservée, jusqu'au dimanche 1er novembre 2026 à 20 h",
+      "prix": 2390,
+      "prixBarre": 2990,
+      "sessions": [
+        {
+          "id": "reguliere-2027-nov-2026+drainage",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en novembre 2026 · Formation offerte : Drainage lymphatique brésilien"
+        },
+        {
+          "id": "reguliere-2027-nov-2026+kobido",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en novembre 2026 · Formation offerte : Kobido"
+        },
+        {
+          "id": "reguliere-2027-nov-2026+maderotherapie",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en novembre 2026 · Formation offerte : Madérothérapie"
+        },
+        {
+          "id": "reguliere-2027-nov-2026+hydraface",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en novembre 2026 · Formation offerte : Hydraface (formation, sans la machine)"
+        },
+        {
+          "id": "reguliere-2027-nov-2026+nanoneedling",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en novembre 2026 · Formation offerte : Nanoneedling (après obtention du CAP)"
+        },
+        {
+          "id": "reguliere-2027-nov-2026+peeling",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en novembre 2026 · Formation offerte : Peeling esthétique (après obtention du CAP)"
+        },
+        {
+          "id": "reguliere-2027-dec-2026+drainage",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en décembre 2026 · Formation offerte : Drainage lymphatique brésilien"
+        },
+        {
+          "id": "reguliere-2027-dec-2026+kobido",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en décembre 2026 · Formation offerte : Kobido"
+        },
+        {
+          "id": "reguliere-2027-dec-2026+maderotherapie",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en décembre 2026 · Formation offerte : Madérothérapie"
+        },
+        {
+          "id": "reguliere-2027-dec-2026+hydraface",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en décembre 2026 · Formation offerte : Hydraface (formation, sans la machine)"
+        },
+        {
+          "id": "reguliere-2027-dec-2026+nanoneedling",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en décembre 2026 · Formation offerte : Nanoneedling (après obtention du CAP)"
+        },
+        {
+          "id": "reguliere-2027-dec-2026+peeling",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en décembre 2026 · Formation offerte : Peeling esthétique (après obtention du CAP)"
+        },
+        {
+          "id": "reguliere-2027-jan-2027+drainage",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en janvier 2027 · Formation offerte : Drainage lymphatique brésilien"
+        },
+        {
+          "id": "reguliere-2027-jan-2027+kobido",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en janvier 2027 · Formation offerte : Kobido"
+        },
+        {
+          "id": "reguliere-2027-jan-2027+maderotherapie",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en janvier 2027 · Formation offerte : Madérothérapie"
+        },
+        {
+          "id": "reguliere-2027-jan-2027+hydraface",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en janvier 2027 · Formation offerte : Hydraface (formation, sans la machine)"
+        },
+        {
+          "id": "reguliere-2027-jan-2027+nanoneedling",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en janvier 2027 · Formation offerte : Nanoneedling (après obtention du CAP)"
+        },
+        {
+          "id": "reguliere-2027-jan-2027+peeling",
+          "label": "Pratique Régulière · Session 2027 - Démarrage des cours en janvier 2027 · Formation offerte : Peeling esthétique (après obtention du CAP)"
+        },
+        {
+          "id": "reguliere-2028-nov-2027+drainage",
+          "label": "Pratique Régulière · Session 2028 - Démarrage des cours en novembre 2027 · Formation offerte : Drainage lymphatique brésilien"
+        },
+        {
+          "id": "reguliere-2028-nov-2027+kobido",
+          "label": "Pratique Régulière · Session 2028 - Démarrage des cours en novembre 2027 · Formation offerte : Kobido"
+        },
+        {
+          "id": "reguliere-2028-nov-2027+maderotherapie",
+          "label": "Pratique Régulière · Session 2028 - Démarrage des cours en novembre 2027 · Formation offerte : Madérothérapie"
+        },
+        {
+          "id": "reguliere-2028-nov-2027+hydraface",
+          "label": "Pratique Régulière · Session 2028 - Démarrage des cours en novembre 2027 · Formation offerte : Hydraface (formation, sans la machine)"
+        },
+        {
+          "id": "reguliere-2028-nov-2027+nanoneedling",
+          "label": "Pratique Régulière · Session 2028 - Démarrage des cours en novembre 2027 · Formation offerte : Nanoneedling (après obtention du CAP)"
+        },
+        {
+          "id": "reguliere-2028-nov-2027+peeling",
+          "label": "Pratique Régulière · Session 2028 - Démarrage des cours en novembre 2027 · Formation offerte : Peeling esthétique (après obtention du CAP)"
+        },
+        {
+          "id": "combo-avec-pratique-intensive-fevrier-et+drainage",
+          "label": "Pratique Intensive · Session 2027 (février et avril 2027) · Formation offerte : Drainage lymphatique brésilien"
+        },
+        {
+          "id": "combo-avec-pratique-intensive-fevrier-et+kobido",
+          "label": "Pratique Intensive · Session 2027 (février et avril 2027) · Formation offerte : Kobido"
+        },
+        {
+          "id": "combo-avec-pratique-intensive-fevrier-et+maderotherapie",
+          "label": "Pratique Intensive · Session 2027 (février et avril 2027) · Formation offerte : Madérothérapie"
+        },
+        {
+          "id": "combo-avec-pratique-intensive-fevrier-et+hydraface",
+          "label": "Pratique Intensive · Session 2027 (février et avril 2027) · Formation offerte : Hydraface (formation, sans la machine)"
+        },
+        {
+          "id": "combo-avec-pratique-intensive-fevrier-et+nanoneedling",
+          "label": "Pratique Intensive · Session 2027 (février et avril 2027) · Formation offerte : Nanoneedling (après obtention du CAP)"
+        },
+        {
+          "id": "combo-avec-pratique-intensive-fevrier-et+peeling",
+          "label": "Pratique Intensive · Session 2027 (février et avril 2027) · Formation offerte : Peeling esthétique (après obtention du CAP)"
+        }
+      ]
     }
   ],
   "almaMax": 2000,
