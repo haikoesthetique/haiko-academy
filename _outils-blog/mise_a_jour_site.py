@@ -76,6 +76,11 @@ def appliquer_ajouts(site):
         i = h.find('<header')
         if 'class="hk-jpo"' not in h and i != -1:
             open(p, 'w', encoding='utf-8').write(h[:i] + lire(os.path.join(m, 'bandeau-visio.html')) + h[i:]); n += 1
+        # photo de la devanture : affichée en entier (fond bleu autour)
+        h = lire(p)
+        if 'id="hk-devanture"' not in h and '</head>' in h:
+            h = h.replace('</head>', lire(os.path.join(m, 'devanture.html')) + '</head>', 1)
+            open(p, 'w', encoding='utf-8').write(h); n += 1
     # sitemap : page de la visio
     p = os.path.join(site, 'sitemap.xml')
     if os.path.exists(p):
